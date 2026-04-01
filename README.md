@@ -1,0 +1,1 @@
+Stock Prediction Portal is a full-stack web application built using React and Django that allows users to analyze and predict stock prices. It integrates machine learning models to forecast trends and visualize data through interactive charts. The platform enables users to explore market insights, track stocks, and make data-driven investment decisions.
