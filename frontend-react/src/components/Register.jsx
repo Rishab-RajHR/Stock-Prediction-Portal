@@ -1,13 +1,27 @@
 import React, { useState } from 'react'
+import axios from 'axios';
 
 const Register = () => {
   const[username, setUsername] = useState("");
   const[email, setEmail] = useState("");
   const[password, setPassword] = useState("");
+  const[errors, setErrors] = useState({});
 
-  const handleRegistration = (e) => {
+  const handleRegistration = async (e) => {
       e.preventDefault();
-      console.log('test');
+      
+      const userData = {
+        username, email, password
+      }
+      
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/v1/register/', userData)
+        console.log('response.data==>', response.data)
+        console.log('Registration successful');
+      } catch (error) {
+        setErrors(error.response.data)
+         console.error('Registration error: ', error.response.data)
+      }
   }
 
   return (
@@ -18,6 +32,7 @@ const Register = () => {
                        <h3 className='text-light text-center mb-4'>Create an Account</h3>
                        <form onSubmit={handleRegistration}>
                           <input type="text" className='form-control mb-3' placeholder=' Username ' value={username} onChange={(e) => setUsername(e.target.value)}/>
+                          <small>{errors.username && <div className='text-danger'>{errors.username}</div>}</small>
                           <input type="email" className='form-control mb-3' placeholder=' Email address' value={email}  onChange={(e) => setEmail(e.target.value)}/>
                           <input type="password" className='form-control mb-5' placeholder='Set password' value={password}  onChange={(e) => setPassword(e.target.value)}/>
                           <button type='submit' className='btn btn-success d-block mx-auto'>Register</button>
